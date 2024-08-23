@@ -26,8 +26,8 @@ jobs:
       uses: azure/arm-deploy@v2
       with:
         deploymentName: ${{ github.run_number }}
-        resourceGroupName: resourceGroup
+        # resourceGroupName: resourceGroup
         template: ./deploy/main.bicep
         parameters: |
-            resourceGroupName=resourceGroup
+            resourceGroupName=rg-darren-test
             location=uksouth

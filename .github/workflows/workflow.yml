@@ -27,7 +27,6 @@ jobs:
       with:
         deploymentName: ${{ github.run_number }}
         resourceGroupName: resourceGroup
-        location: uksouth
         template: ./deploy/main.bicep
         parameters: |
             resourceGroupName=resourceGroup

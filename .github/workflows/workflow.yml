@@ -22,20 +22,14 @@ jobs:
         tenant-id: ${{ secrets.AZURE_TENANT_ID }}
         subscription-id: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
 
-    # - name: Deploy Bicep Template
-    #   uses: azure/arm-deploy@v2
-    #   with:
-    #     deploymentName: ${{ github.run_number }}
-    #     subscriptionId: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
-    #     resourceGroupName: rg-darren-test
-    #     location: uksouth
-    #     template: ./main.bicep
-    #     parameters: |
-    #         resourceGroupName=rg-darren-test
-    #         location=uksouth
-
     - name: Deploy Bicep Template
-      run: |
-        az deployment group create \
-        --template-file main.bicep \
-        --parameters resourceGroupName=rg-darren-test
+      uses: azure/arm-deploy@v2
+      with:
+        deploymentName: ${{ github.run_number }}
+        subscriptionId: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
+        resourceGroupName: demoResourceGroup
+        location: uksouth
+        template: ./resourceGroup.bicep
+        parameters: |
+            resourceGroupName=rg-darren-test
+            location=uksouth

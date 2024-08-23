@@ -6,11 +6,8 @@ permissions:
   id-token: write
   contents: read
 
-env:
-    AZURE_RESOURCEGROUP_NAME: rg-darren-test
-
 jobs:
-  deploy-to-azure:
+  deploy:
     runs-on: ubuntu-latest
 
     steps:
@@ -29,6 +26,9 @@ jobs:
       uses: azure/arm-deploy@v1
       with:
         deploymentName: ${{ github.run_number }}
-        resourceGroupName: ${{ env.AZURE_RESOURCEGROUP_NAME }}
+        resourceGroupName: resourceGroup
+        location: uksouth
         template: ./deploy/main.bicep
-        parameters: resourceGroupName=resourceGroup
+        parameters: |
+            resourceGroupName=resourceGroup
+            location=uksouth

@@ -7,7 +7,7 @@ param resourceNameSuffix string = uniqueString(resourceGroup().id)
 
 // Define the names for resources.
 var logAnalyticsWorkspaceName = 'workspace-${resourceNameSuffix}'
-var storageAccountName = 'mystorage-${resourceNameSuffix}'
+var storageAccountName = 'mystorage${resourceNameSuffix}'
 
 resource logAnalyticsWorkspace 'Microsoft.OperationalInsights/workspaces@2022-10-01' = {
   name: logAnalyticsWorkspaceName

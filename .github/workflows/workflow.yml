@@ -27,7 +27,8 @@ jobs:
       with:
         deploymentName: ${{ github.run_number }}
         subscriptionId: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
-        # resourceGroupName: rg-darren-test
+        resourceGroupName: rg-darren-test
+        location: uksouth
         template: ./main.bicep
         parameters: |
             resourceGroupName=rg-darren-test

@@ -18,15 +18,15 @@ module tagsModule '../modules/tags.bicep' = {
   name: 'tagsModule'
 }
 
-resource storageAccount 'Microsoft.Storage/storageAccounts@2022-09-01' = {
-  name: storageAccountName
-  location: location
-  kind: 'StorageV2'
-  sku: {
-    name: 'Standard_LRS'
-  }
-  tags: tagsModule.outputs.tags
-}
+// resource storageAccount 'Microsoft.Storage/storageAccounts@2022-09-01' = {
+//   name: storageAccountName
+//   location: location
+//   kind: 'StorageV2'
+//   sku: {
+//     name: 'Standard_LRS'
+//   }
+//   tags: tagsModule.outputs.tags
+// }
 
 module logAnalyticsModule '../modules/loganalyticsworkspace.bicep' = {
   name: 'logAnalyticsDeployment'

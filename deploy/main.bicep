@@ -5,36 +5,17 @@ param location string = resourceGroup().location
 @maxLength(13)
 param resourceNameSuffix string = uniqueString(resourceGroup().id)
 
-@description('Timestamp to be generated dynamically (as a placeholder)')
-param timestamp string = utcNow()
+@description('The name of the Log Analytics Workspace')
+param workspaceName string = 'myLogAnalyticsWorkspace'
+
+@description('The Log Analytics Workspace retention period')
+param retentionInDays int = 30
 
 // Define the names for resources.
-var logAnalyticsWorkspaceName = 'workspace-${resourceNameSuffix}'
 var storageAccountName = 'mystorage${resourceNameSuffix}'
 
-@description('The list of tags to be deployed with all Azure resources.')
-var staticTags = {
-  ManagedByBicep:         'True'
-  Owner:                  '05_azureplatformengineering@gov.scot'
-  CostCentre:             '55645'
-  ServiceCategory:        'A'
-  SNApplicationService:   'Foundation Services'
-  SNResolver:             'Azure Platform'
-  SNBusinessApplication:  'Azure Platform'
-  DataClassification:     'Internal'
-}
-
-var dynamicTags = {
-  LastUpdated: timestamp
-}
-
-@description('Merged tags (static + dynamic)')
-var tags = union(staticTags, dynamicTags)
-
-resource logAnalyticsWorkspace 'Microsoft.OperationalInsights/workspaces@2022-10-01' = {
-  name: logAnalyticsWorkspaceName
-  location: location
-  tags: tags
+module tagsModule '../modules/tags.bicep' = {
+  name: 'tagsModule'
 }
 
 resource storageAccount 'Microsoft.Storage/storageAccounts@2022-09-01' = {
@@ -44,5 +25,15 @@ resource storageAccount 'Microsoft.Storage/storageAccounts@2022-09-01' = {
   sku: {
     name: 'Standard_LRS'
   }
-  tags: tags
+  tags: tagsModule.outputs.tags
+}
+
+module logAnalyticsModule '../modules/loganalyticsworkspace.bicep' = {
+  name: 'logAnalyticsDeployment'
+  params: {
+    workspaceName: workspaceName
+    location: location
+    retentionInDays: retentionInDays
+    tags: tagsModule.outputs.tags
+  }
 }

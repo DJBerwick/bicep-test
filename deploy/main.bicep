@@ -14,7 +14,7 @@ var storageAccountName = 'mystorage${resourceNameSuffix}'
 
 @description('The list of tags to be deployed with all Azure resources.')
 var staticTags = {
-  AzptManagedByTerraform: 'True'
+  ManagedByBicep:         'True'
   Owner:                  '05_azureplatformengineering@gov.scot'
   CostCentre:             '55645'
   ServiceCategory:        'A'

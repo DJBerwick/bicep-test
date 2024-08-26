@@ -1,8 +1,19 @@
 @description('The location into which your Azure resources should be deployed.')
 param location string = resourceGroup().location
 
+@description('A unique suffix to add to resource names that need to be globally unique.')
+@maxLength(13)
+param resourceNameSuffix string = uniqueString(resourceGroup().id)
+
+@description('Timestamp to be generated dynamically (as a placeholder)')
+param timestamp string = utcNow()
+
+// Define the names for resources.
+var logAnalyticsWorkspaceName = 'workspace-${resourceNameSuffix}'
+var storageAccountName = 'mystorage${resourceNameSuffix}'
+
 @description('The list of tags to be deployed with all Azure resources.')
-param tags object = {
+var staticTags = {
   AzptManagedByTerraform: 'True'
   Owner:                  '05_azureplatformengineering@gov.scot'
   CostCentre:             '55645'
@@ -11,15 +22,15 @@ param tags object = {
   SNResolver:             'Azure Platform'
   SNBusinessApplication:  'Azure Platform'
   DataClassification:     'Internal'
+  LastUpdated2:           timestamp
 }
 
-@description('A unique suffix to add to resource names that need to be globally unique.')
-@maxLength(13)
-param resourceNameSuffix string = uniqueString(resourceGroup().id)
+var dynamicTags = {
+  LastUpdated: timestamp
+}
 
-// Define the names for resources.
-var logAnalyticsWorkspaceName = 'workspace-${resourceNameSuffix}'
-var storageAccountName = 'mystorage${resourceNameSuffix}'
+@description('Merged tags (static + dynamic)')
+var tags = union(staticTags, dynamicTags)
 
 resource logAnalyticsWorkspace 'Microsoft.OperationalInsights/workspaces@2022-10-01' = {
   name: logAnalyticsWorkspaceName

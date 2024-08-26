@@ -22,7 +22,6 @@ var staticTags = {
   SNResolver:             'Azure Platform'
   SNBusinessApplication:  'Azure Platform'
   DataClassification:     'Internal'
-  LastUpdated2:           timestamp
 }
 
 var dynamicTags = {

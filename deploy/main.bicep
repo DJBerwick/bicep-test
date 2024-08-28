@@ -5,11 +5,11 @@ param location string = resourceGroup().location
 @maxLength(13)
 param resourceNameSuffix string = uniqueString(resourceGroup().id)
 
-@description('The name of the Log Analytics Workspace')
-param workspaceName string = 'myLogAnalyticsWorkspace'
+// @description('The name of the Log Analytics Workspace')
+// param workspaceName string = 'myLogAnalyticsWorkspace'
 
-@description('The Log Analytics Workspace retention period')
-param retentionInDays int = 30
+// @description('The Log Analytics Workspace retention period')
+// param retentionInDays int = 30
 
 // Define the names for resources.
 var storageAccountName = 'mystorage${resourceNameSuffix}'
@@ -27,12 +27,12 @@ resource storageAccount 'Microsoft.Storage/storageAccounts@2022-09-01' = {
   }
 }
 
-module logAnalyticsModule '../modules/loganalyticsworkspace.bicep' = {
-  name: 'logAnalyticsDeployment'
-  params: {
-    workspaceName: workspaceName
-    location: location
-    retentionInDays: retentionInDays
-    tags: tagsModule.outputs.tags
-  }
-}
+// module logAnalyticsModule '../modules/loganalyticsworkspace.bicep' = {
+//   name: 'logAnalyticsDeployment'
+//   params: {
+//     workspaceName: workspaceName
+//     location: location
+//     retentionInDays: retentionInDays
+//     tags: tagsModule.outputs.tags
+//   }
+// }

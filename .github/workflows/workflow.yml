@@ -43,7 +43,6 @@ jobs:
         region: ${{ env.REGION }}
         deploymentName: ${{ github.run_number }}
         template: ./deploy/main.bicep
-        parameters: azureRegion=${{ env.REGION }}
         deploymentMode: Validate    
 
   preview:
@@ -69,7 +68,6 @@ jobs:
         region: ${{ env.REGION }}
         deploymentName: ${{ github.run_number }}
         template: ./deploy/main.bicep
-        parameters: azureRegion=${{ env.REGION }}
         additionalArguments: --what-if  
         deploymentMode: Complete
 
@@ -97,5 +95,4 @@ jobs:
         region: ${{ env.REGION }}
         deploymentName: ${{ github.run_number }}
         template: ./deploy/main.bicep
-        parameters: azureRegion=${{ env.REGION }}
         deploymentMode: Complete

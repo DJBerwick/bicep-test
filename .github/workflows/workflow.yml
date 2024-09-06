@@ -8,7 +8,7 @@ permissions:
   contents: read
 
 env:
-  AZURE_RESOURCEGROUP_NAME: demoResourceGroup  
+  REGION: uksouth  
 
 jobs:
 
@@ -40,9 +40,11 @@ jobs:
     - uses: azure/arm-deploy@v2
       name: Run preflight validation
       with:
+        scope: subscription
+        region: ${{ env.REGION }}
         deploymentName: ${{ github.run_number }}
-        resourceGroupName: ${{ env.AZURE_RESOURCEGROUP_NAME }}
         template: ./deploy/main.bicep
+        parameters: azureRegion=${{ env.REGION }}
         deploymentMode: Validate    
 
   preview:
@@ -64,8 +66,11 @@ jobs:
       name: Run what-if
       with:
         failOnStdErr: false
-        resourceGroupName: ${{ env.AZURE_RESOURCEGROUP_NAME }}
+        scope: subscription
+        region: ${{ env.REGION }}
+        deploymentName: ${{ github.run_number }}
         template: ./deploy/main.bicep
+        parameters: azureRegion=${{ env.REGION }}
         additionalArguments: --what-if  
         deploymentMode: Complete
 
@@ -89,8 +94,9 @@ jobs:
       uses: azure/arm-deploy@v2
       with:
         failOnStdErr: false
+        scope: subscription
+        region: ${{ env.REGION }}
         deploymentName: ${{ github.run_number }}
-        subscriptionId: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
-        resourceGroupName: ${{ env.AZURE_RESOURCEGROUP_NAME }}
         template: ./deploy/main.bicep
+        parameters: azureRegion=${{ env.REGION }}
         deploymentMode: Complete

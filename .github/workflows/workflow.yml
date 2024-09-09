@@ -7,8 +7,10 @@ permissions:
   id-token: write
   contents: read
 
+# Define parameters
 env:
-  REGION: uksouth  
+  REGION: uksouth
+  CODE_PATH: deploy/main.bicep
 
 jobs:
 
@@ -20,7 +22,7 @@ jobs:
       uses: actions/checkout@v4
     
     - name: Run Bicep linter
-      run: az bicep build --file deploy/main.bicep
+      run: az bicep build --file ${{ env.CODE_PATH }}
 
   validate:
     runs-on: ubuntu-latest
@@ -42,7 +44,7 @@ jobs:
         scope: subscription
         region: ${{ env.REGION }}
         deploymentName: ${{ github.run_number }}
-        template: ./deploy/main.bicep
+        template: ${{ env.CODE_PATH }}
         deploymentMode: Validate    
 
   preview:
@@ -67,7 +69,7 @@ jobs:
         scope: subscription
         region: ${{ env.REGION }}
         deploymentName: ${{ github.run_number }}
-        template: ./deploy/main.bicep
+        template: ${{ env.CODE_PATH }}
         additionalArguments: --what-if  
         deploymentMode: Complete
 
@@ -94,5 +96,5 @@ jobs:
         scope: subscription
         region: ${{ env.REGION }}
         deploymentName: ${{ github.run_number }}
-        template: ./deploy/main.bicep
+        template: ${{ env.CODE_PATH }}
         deploymentMode: Complete

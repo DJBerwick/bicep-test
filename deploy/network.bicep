@@ -48,7 +48,7 @@ var tags = {
 // ============ //
 
 @description('The Resource Group into which your Azure resources should be deployed.')
-resource networkResourceGroup 'Microsoft.Resources/resourceGroups@2021-04-01' = {
+resource resourceGroup 'Microsoft.Resources/resourceGroups@2021-04-01' = {
   name: resourceGroupName
   location: location
   tags: tags
@@ -58,3 +58,15 @@ resource networkResourceGroup 'Microsoft.Resources/resourceGroups@2021-04-01' = 
 // Networking //
 // ========== //
 
+module network '../modules/network.bicep' = {
+  scope: resourceGroup
+  name: '${uniqueString(deployment().name, location)}-vnet-${customerPrefix}-${environment}'
+  params: {
+    vnetName: 'vnet-${customerPrefix}-${environment}'
+    location: location
+    addressPrefixes: [
+      '10.0.0.0/16'
+    ]
+    tags: tags
+  }
+}

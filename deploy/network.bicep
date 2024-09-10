@@ -8,7 +8,7 @@ targetScope = 'subscription'
 param location string = 'uksouth'
 
 @description('Required: The prefix/shortened name of the customer workload.')
-param customerPrefix string = 'bakery'
+param customerPrefix string = 'cdo'
 
 @description('Required: The environment into which your Azure resources should be deployed.')
 @allowed([

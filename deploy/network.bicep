@@ -24,7 +24,7 @@ param environment string = 'prd'
 param resourceGroupName string = 'rg-core-network-${customerPrefix}-${environment}'
 
 @description('Timestamp to be generated dynamically (as a placeholder)')
-param timestamp string = utcNow()
+param timestamp string = utcNow('dd-MMM-yyyy HH:mm:ss')
 
 // ========= //
 // Variables //

@@ -60,7 +60,7 @@ resource resourceGroup 'Microsoft.Resources/resourceGroups@2021-04-01' = {
 
 module network '../modules/network.bicep' = {
   scope: resourceGroup
-  name: '${uniqueString(deployment().name, location)}-vnet-${customerPrefix}-${environment}'
+  name: '${uniqueString(deployment().name, location)}-vnet-${customerPrefix}-${environment}-${deployment().name}'
   params: {
     vnetName: 'vnet-${customerPrefix}-${environment}'
     location: location

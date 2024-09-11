@@ -19,7 +19,7 @@ param customerPrefix string = 'cdo'
 ])
 param environment string = 'prd'
 
-@description('The location into which your Azure resources should be deployed.')
+@description('The Resource Group Name into which your Azure resources should be deployed.')
 @maxLength(90)
 param resourceGroupName string = 'rg-core-network-${customerPrefix}-${environment}'
 
@@ -68,5 +68,6 @@ module network '../modules/network.bicep' = {
       '10.0.0.0/16'
     ]
     tags: tags
+    
   }
 }

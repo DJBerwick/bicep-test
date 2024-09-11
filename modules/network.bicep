@@ -53,10 +53,37 @@ resource virtualNetwork 'Microsoft.Network/virtualNetworks@2024-01-01' = {
 @description('Required: An Array of configuration for 1 or more Subnets for the Virtual Network.')
 param subnets array
 
+@description('Optional: The service endpoints to enable on the subnet.')
+param serviceEndpoints string[] = []
+
 resource subnet 'Microsoft.Network/virtualNetworks/subnets@2024-01-01' = [for subnet in subnets: {
   name: subnet.name
   parent: virtualNetwork
   properties: {
     addressPrefixes: subnet.address_prefixes
+    serviceEndpoints: [
+      for endpoint in serviceEndpoints: {
+        service: endpoint
+      }
+    ]
   }
 }]
+
+
+
+
+// service_endpoints                             = toset(each.value.service_endpoints)
+// service_endpoint_policy_ids                   = toset(each.value.service_endpoint_policy_ids)
+// private_endpoint_network_policies_enabled     = each.value.private_endpoint_network_policies_enabled
+// private_link_service_network_policies_enabled = each.value.private_link_service_network_policies_enabled
+
+// dynamic "delegation" {
+//   for_each = each.value.delegation != null ? each.value.delegation : []
+//   content {
+//     name = delegation.value.type
+//     service_delegation {
+//       name    = delegation.value.type
+//       actions = lookup(var.subnet_delegations_actions, delegation.value.type, delegation.value.action)
+//     }
+//   }
+// }

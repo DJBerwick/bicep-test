@@ -66,7 +66,7 @@ resource subnet 'Microsoft.Network/virtualNetworks/subnets@2024-01-01' = [for su
     //     service: endpoint
     //   }
     // ]
-    serviceEndpoints: subnet.service_endpoints
+    // serviceEndpoints: subnet.service_endpoints
   }
 }]
 

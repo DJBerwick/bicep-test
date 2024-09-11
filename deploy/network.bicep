@@ -23,9 +23,6 @@ param environment string = 'prd'
 @maxLength(90)
 param resourceGroupName string = 'rg-core-network-${customerPrefix}-${environment}'
 
-@description('Required: An Array of 1 or more IP Address Prefixes for the Virtual Network.')
-param addressPrefixes array = ['10.0.0.0/16']
-
 @description('Timestamp to be generated dynamically (as a placeholder)')
 param timestamp string = utcNow('dd-MMM-yyyy HH:mm:ss')
 
@@ -67,7 +64,18 @@ module network '../modules/network.bicep' = {
   params: {
     vnetName: 'vnet-${customerPrefix}-${environment}'
     location: location
-    addressPrefixes: addressPrefixes
+    addressPrefixes: ['10.0.0.0/16']
     tags: tags
+
+    subnets: [
+      {
+        name: 'subnet1'
+        address_prefixes: ['10.0.1.0/24']
+      }
+      {
+        name: 'subnet2'
+        address_prefixes: ['10.0.2.0/24']
+      }
+    ]
   }
 }

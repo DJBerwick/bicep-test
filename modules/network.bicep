@@ -49,3 +49,25 @@ resource virtualNetwork 'Microsoft.Network/virtualNetworks@2024-01-01' = {
     flowTimeoutInMinutes: flowTimeoutInMinutes != 0 ? flowTimeoutInMinutes : null
   }
 }
+
+// @description('Required: The name of the Subnets(s).')
+// param subnetName string
+
+// resource subnet_orig 'Microsoft.Network/virtualNetworks/subnets@2024-01-01' = {
+//   name: subnetName
+//   parent: virtualNetwork
+//   properties: {
+//     addressPrefixes: []
+    
+//   }
+// }
+
+param subnets array
+
+resource subnet 'Microsoft.Network/virtualNetworks/subnets@2024-01-01' = [for subnet in subnets: {
+  name: subnet.name
+  parent: virtualNetwork
+  properties: {
+    addressPrefixes: subnet.address_prefixes
+  }
+}]

@@ -68,6 +68,7 @@ module network '../modules/network.bicep' = {
       '10.0.0.0/16'
     ]
     tags: tags
-    
+    flowTimeoutInMinutes: 5
+    vnetEncryption: true
   }
 }

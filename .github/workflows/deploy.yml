@@ -1,4 +1,4 @@
-name: Deploy Bicep Template Test
+name: Deploy Bicep Template Test 2
 concurrency: My_Workflow
 
 on: [workflow_dispatch]

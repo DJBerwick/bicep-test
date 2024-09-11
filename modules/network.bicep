@@ -50,18 +50,7 @@ resource virtualNetwork 'Microsoft.Network/virtualNetworks@2024-01-01' = {
   }
 }
 
-// @description('Required: The name of the Subnets(s).')
-// param subnetName string
-
-// resource subnet_orig 'Microsoft.Network/virtualNetworks/subnets@2024-01-01' = {
-//   name: subnetName
-//   parent: virtualNetwork
-//   properties: {
-//     addressPrefixes: []
-    
-//   }
-// }
-
+@description('Required: An Array of configuration for 1 or more Subnets for the Virtual Network.')
 param subnets array
 
 resource subnet 'Microsoft.Network/virtualNetworks/subnets@2024-01-01' = [for subnet in subnets: {

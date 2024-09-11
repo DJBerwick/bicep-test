@@ -69,11 +69,11 @@ module network '../modules/network.bicep' = {
 
     subnets: [
       {
-        name: 'subnet1'
+        name: 'snet1-vnet-${customerPrefix}-${environment}'
         address_prefixes: ['10.0.1.0/24']
       }
       {
-        name: 'subnet2'
+        name: 'snet2-vnet-${customerPrefix}-${environment}'
         address_prefixes: ['10.0.2.0/24']
       }
     ]

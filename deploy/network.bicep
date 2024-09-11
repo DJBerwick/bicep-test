@@ -24,7 +24,7 @@ param environment string = 'prd'
 param resourceGroupName string = 'rg-core-network-${customerPrefix}-${environment}'
 
 @description('Required: An Array of 1 or more IP Address Prefixes for the Virtual Network.')
-param addressPrefixes array = ['10.0.0.0/16']
+param addressPrefixes array = ['10.0.0.0/16', '10.1.0.0/16']
 
 @description('Timestamp to be generated dynamically (as a placeholder)')
 param timestamp string = utcNow('dd-MMM-yyyy HH:mm:ss')

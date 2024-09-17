@@ -53,8 +53,8 @@ resource virtualNetwork 'Microsoft.Network/virtualNetworks@2024-01-01' = {
 @description('Required: An Array of configuration for 1 or more Subnets for the Virtual Network.')
 param subnets array
 
-@description('Optional: The service endpoints to enable on the subnet.')
-param serviceEndpoints string[] = []
+// @description('Optional: The service endpoints to enable on the subnet.')
+// param serviceEndpoints string[] = []
 
 resource subnet 'Microsoft.Network/virtualNetworks/subnets@2024-01-01' = [for subnet in subnets: {
   name: subnet.name
